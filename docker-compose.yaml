@@ -7,7 +7,7 @@ services:
         ports:
             - "8245:80"
         volumes:
-            - ./app/vhosts:/etc/apache2/sites-enabled
+            - ./symfony_config/vhosts:/etc/apache2/sites-enabled
             - ./:/var/www
         restart: always
         networks:
