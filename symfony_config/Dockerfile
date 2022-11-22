@@ -11,17 +11,18 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     &&  locale-gen \
 \
     &&  curl -sS https://getcomposer.org/installer | php -- \
-    &&  mv composer.phar /usr/local/bin/composer \
-\
-    &&  curl -sS https://get.symfony.com/cli/installer | bash \
-    &&  mv /root/.symfony/bin/symfony /usr/local/bin \
-\
-    &&  docker-php-ext-configure \
+    &&  mv composer.phar /usr/local/bin/composer
+
+RUN docker-php-ext-configure \
             intl \
     &&  docker-php-ext-install \
             pdo pdo_mysql opcache intl zip calendar dom mbstring gd xsl \
 \
     &&  pecl install apcu && docker-php-ext-enable apcu
+
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
+
+RUN apt install symfony-cli
 
 WORKDIR /var/www/
 
